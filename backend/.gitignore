@@ -1,0 +1,5 @@
+# Ignore node_modules
+node_modules/
+
+# Ignore dotenv environment variable files
+.env
