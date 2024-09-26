@@ -4,11 +4,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { useAuth } from '@/context/AuthProvider';
 
 const Button = ({ title, onPress, style }: { title: string; onPress: () => void; style?: any }) => (
-  <TouchableOpacity
-    onPress={onPress}
-    style={[style, { backgroundColor: '#007bff', borderRadius: 5, padding: 10, marginBottom: 10 }]}
-  >
-    <Text style={{ color: '#fff', textAlign: 'center' }}>{title}</Text>
+  <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
+    <Text style={styles.buttonText}>{title}</Text>
   </TouchableOpacity>
 );
 
@@ -71,7 +68,7 @@ export default function PostScreen({ onPostSubmit }: { onPostSubmit: () => void 
         setDescription('');
         setLocation('');
         setImage(null);
-        onPostSubmit(); // Notify parent to refresh posts
+        onPostSubmit();
       } else {
         const data = await response.json();
         Alert.alert('Error', data.msg || 'Something went wrong');
@@ -83,28 +80,28 @@ export default function PostScreen({ onPostSubmit }: { onPostSubmit: () => void 
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center', padding: 16 }}>
-      <View style={{ marginBottom: 20 }}>
-        <Text style={{ fontSize: 24, marginBottom: 10 }}>Create a Post</Text>
-        <Text style={{ marginBottom: 10 }}>Fill out the details below to create a new post.</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Create a Post</Text>
+        <Text style={styles.subtitle}>Fill out the details below to create a new post.</Text>
       </View>
       <TextInput
         placeholder="Title"
         value={title}
         onChangeText={setTitle}
-        style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 5, padding: 10, marginBottom: 10 }}
+        style={styles.input}
       />
       <TextInput
         placeholder="Description"
         value={description}
         onChangeText={setDescription}
-        style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 5, padding: 10, marginBottom: 10 }}
+        style={styles.input}
       />
       <TextInput
         placeholder="Location"
         value={location}
         onChangeText={setLocation}
-        style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 5, padding: 10, marginBottom: 10 }}
+        style={styles.input}
       />
       <Button title="Pick an image" onPress={pickImage} />
       {image && (
@@ -118,6 +115,49 @@ export default function PostScreen({ onPostSubmit }: { onPostSubmit: () => void 
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+    backgroundColor: '#f0f8ff', // Pastel background for consistency
+  },
+  header: {
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#34495e', // Dark pastel
+    textAlign: 'center',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#34495e',
+    textAlign: 'center',
+    marginBottom: 15,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    padding: 12,
+    backgroundColor: '#fdfdfd',
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: '#87CEEB',
+    borderRadius: 10,
+    padding: 12,
+    marginTop: 10,
+    alignSelf: 'center',
+    width: '60%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   imageContainer: {
     width: '100%',
     aspectRatio: 4 / 3,
@@ -131,5 +171,3 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
-
-

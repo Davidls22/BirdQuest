@@ -13,7 +13,7 @@ interface Post {
 }
 
 interface PostsListProps {
-  refresh: boolean; // Trigger a refetch when this changes
+  refresh: boolean;
 }
 
 const PostsList = ({ refresh }: PostsListProps) => {
@@ -30,7 +30,6 @@ const PostsList = ({ refresh }: PostsListProps) => {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        // Sort posts with the newest at the top
         const sortedPosts = data.sort((a: Post, b: Post) => (b._id > a._id ? 1 : -1));
         setPosts(sortedPosts);
       } catch (error) {
@@ -41,7 +40,7 @@ const PostsList = ({ refresh }: PostsListProps) => {
     };
 
     fetchPosts();
-  }, [refresh]); // Refetch posts when refresh changes
+  }, [refresh]);
 
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
@@ -62,9 +61,9 @@ const PostsList = ({ refresh }: PostsListProps) => {
       renderItem={({ item }) => (
         <View style={styles.postContainer}>
           <Text style={styles.postTitle}>{item.title}</Text>
-          {item.image ? (
+          {item.image && (
             <Image source={{ uri: `http://localhost:8080/${item.image}` }} style={styles.postImage} />
-          ) : null}
+          )}
           <Text>{item.description}</Text>
           <Text>Location: {item.location}</Text>
           <Text>Posted by: {item.user.name}</Text>
@@ -77,16 +76,25 @@ const PostsList = ({ refresh }: PostsListProps) => {
 const styles = StyleSheet.create({
   postContainer: {
     padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   postTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#34495e',
+    marginBottom: 5,
   },
   postImage: {
     width: '100%',
     height: 200,
+    borderRadius: 10,
     marginVertical: 10,
   },
 });

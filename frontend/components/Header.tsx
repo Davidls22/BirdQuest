@@ -29,15 +29,11 @@ const Header = () => {
 
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>
-        BirdQuest
-      </Text>
+      <Text style={styles.title}>BirdQuest</Text>
       <View style={styles.userSection}>
-        <Text style={styles.userName}>
-          {user?.name}
-        </Text>
+        <Text style={styles.userName}>{user?.name}</Text>
         <TouchableOpacity onPress={logout} style={styles.logoutButton}>
-          <Ionicons name="log-out-outline" size={12} color="white" />
+          <Ionicons name="log-out-outline" size={14} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -60,7 +56,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#34495e',
     fontFamily: 'FredokaOne',
   },
   userSection: {
@@ -74,7 +70,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   logoutButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#87CEEB',
     borderRadius: 5,
     padding: 5,
   },

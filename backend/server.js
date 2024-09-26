@@ -10,6 +10,8 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 
+console.log('JWT Secret:', process.env.JWT_SECRET);
+
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));

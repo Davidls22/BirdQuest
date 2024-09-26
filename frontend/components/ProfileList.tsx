@@ -30,7 +30,7 @@ const ProfileList = ({ refresh }) => {
         const data = await response.json();
 
         if (Array.isArray(data.posts)) {
-          setPosts(data.posts.reverse()); // Ensure posts are ordered with new ones at the top
+          setPosts(data.posts.reverse());
         } else {
           throw new Error('Invalid data format');
         }
@@ -42,7 +42,7 @@ const ProfileList = ({ refresh }) => {
     };
 
     fetchProfileData();
-  }, [user, refresh]); // Refetch posts when refresh changes
+  }, [user, refresh]);
 
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
@@ -52,7 +52,7 @@ const ProfileList = ({ refresh }) => {
     return <Text>{error}</Text>;
   }
 
-  if (posts.length === 0) {
+  if (!posts.length) {
     return <Text>No posts available</Text>;
   }
 
@@ -63,9 +63,9 @@ const ProfileList = ({ refresh }) => {
       renderItem={({ item }) => (
         <View style={styles.postContainer}>
           <Text style={styles.postTitle}>{item.title}</Text>
-          {item.image ? (
+          {item.image && (
             <Image source={{ uri: `http://localhost:8080/${item.image}` }} style={styles.postImage} />
-          ) : null}
+          )}
           <Text>{item.description}</Text>
           <Text>Location: {item.location}</Text>
         </View>
@@ -77,16 +77,25 @@ const ProfileList = ({ refresh }) => {
 const styles = StyleSheet.create({
   postContainer: {
     padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   postTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#34495e',
+    marginBottom: 5,
   },
   postImage: {
     width: '100%',
     height: 200,
+    borderRadius: 10,
     marginVertical: 10,
   },
 });
